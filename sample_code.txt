@@ -1,0 +1,11 @@
+Connect-MsolService
+
+$licenseObj = Get-MsolAccountSku | Where-Object {$_.SkuPartNumber -eq "PLANNERSTANDALONE"} 
+$license = $licenseObj.AccountSkuId
+Get-MsolUser | Select-Object Displayname, UserPrincipalName | `
+Export-CSV -Path d:\ExportedUsers.csv -NoTypeInformation
+
+# Edit the file d:\ExportedUsers.csv and remove users who shouldn't be licensed before you run the following command
+
+Import-Csv -Path d:\Exportedusers.csv | ForEach-Object `
+{ Set-MsolUserLicense -UserPrincipalName $_.UserPrincipalName -AddLicenses $license} 

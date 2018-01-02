@@ -9,3 +9,5 @@ Export-CSV -Path d:\ExportedUsers.csv -NoTypeInformation
 
 Import-Csv -Path d:\Exportedusers.csv | ForEach-Object `
 { Set-MsolUserLicense -UserPrincipalName $_.UserPrincipalName -AddLicenses $license} 
+
+Add Comment
